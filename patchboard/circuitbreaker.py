@@ -64,4 +64,16 @@ class CircuitBreaker(object):
     def run(self):
         raise NotImplementedError
 
-
+def circuit_breaker(func, threshold, timeout, default=None):
+    class Breaker(object):
+        def run(self, *args, **kwargs):
+            return func(*args, **kwargs)
+    breaker = Breaker(threshold, timeout)
+    def wrapper(*args, **kwargs):
+        try:
+            return breaker(*args, **kwargs)
+        except:
+            if callable(default):
+                return default()
+            raise
+    return wrapper

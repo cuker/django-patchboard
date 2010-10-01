@@ -51,6 +51,7 @@ Listeners may be queued, but may only use short term queue.
 Collector determines if listeners are to be queued. 
 May detect the number of listeners and only default to short term queue if it is above a certain number. 
 
+Usefull for api integrations. Apps can simply listen to the signal and provide their input. The firing app simply collects and aggregates the results.
 
 Signals with Side-Effects
 -------------------------
