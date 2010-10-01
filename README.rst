@@ -1,9 +1,8 @@
 Short Term Queue
 ================
+shortstack.py
 
 THIS MAY NOT BE A GOOD IDEA!
-
-shortstack.pk
 
 Optimized for completing within a request cycle. 
 Better then spawning a new thread for each item, that might eat up all resources at once (mysql connections running out, spawning 500 processes, etc). 
@@ -18,7 +17,7 @@ Specify a fall back function in case of expiration. Would likely return None or 
 
 Circuit Breaker
 ===============
-circuitbreaker.py
+patchboard/circuitbreaker.py
 
 Used to limit resource usage while a 3rd party is down. 
 If X consecutive failures, open the circuit and use an exception on each call CircuitOpen. 
@@ -44,6 +43,8 @@ Listeners determine if they are to be queued or not
 
 Collectors
 ----------
+examples/collector.py
+
 Fires a signal and collects the responses of all the listeners. 
 May aggregate results, but is done on the side of the collector. 
 Listeners may be queued, but may only use short term queue. 
@@ -53,7 +54,7 @@ May detect the number of listeners and only default to short term queue if it is
 
 Signals with Side-Effects
 -------------------------
-prioritizeddispatcher.py
+patchboard/prioritizeddispatcher.py
 
 Listeners may be sharing an object they are modifying. 
 Needs to be prioritized to guarantee to order of the side effects. 
