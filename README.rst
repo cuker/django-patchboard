@@ -60,3 +60,11 @@ patchboard/prioritizeddispatcher.py
 Listeners may be sharing an object they are modifying. 
 Needs to be prioritized to guarantee to order of the side effects. 
 Using Queues is probably not a good idea in this scenario. 
+
+Error Collecting
+================
+patchboard/signals.py
+
+When listeners have an unhandled exception we may not want the error to propigate up (usually depends on the listener). 
+We do however want to log that error and return a default value. 
+
