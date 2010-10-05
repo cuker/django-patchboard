@@ -98,7 +98,7 @@ class RequirementsTree(object):
             return -1
         if bnode.label in self._priority_table[anode.label]: #b before a
             return 1
-        return 0
+        return len(self._priority_table[anode.label]) - len(self._priority_table[bnode.label])
     
     def sort(self):
         items = self.items.values()

@@ -13,6 +13,7 @@ class TestRequirementsTree(unittest.TestCase):
                 try:
                     self.assertTrue(requirement in seen)
                 except:
+                    print item, requirement, seen
                     for key, value in tree._priority_table.iteritems():
                         print key, value
                     for item in tree.sorted_items:
@@ -34,16 +35,18 @@ class TestRequirementsTree(unittest.TestCase):
         tree = RequirementsTree()
         tree.add('clear-giftcard', 'clear-giftcard', before=['order-total'])
         tree.add('item-subtotal', 'item-subtotal')
+        tree.add('item-discount', 'item-discount', before=['order-subtotal', 'taxes'], after=['item-subtotal'])
+        tree.add('clear-substitution', 'clear-substitution', before=['order-total'])
+        tree.add('order-discount', 'order-discount', before=['order-total', 'taxes'], after=['order-subtotal'])
+        tree.add('taxes', 'taxes', before=['order-total'], after=['order-subtotal'])
+        tree.add('shipping', 'shipping', before=['order-total'])
+        tree.add('clear-storecredit', 'clear-storecredit', before=['order-total'])
         tree.add('order-subtotal', 'order-subtotal', after=['item-subtotal'])
+        tree.add('order-total', 'order-total', after=['order-subtotal'])
         tree.add('storecredit', 'storecredit', after=['order-total'])
         tree.add('giftcard', 'giftcard', after=['order-total'])
-        tree.add('item-discount', 'item-discount', before=['order-subtotal', 'taxes'], after=['item-subtotal'])
-        tree.add('order-total', 'order-total', after=['order-subtotal'])
-        tree.add('clear-substitution', 'clear-substitution', before=['order-total'])
-        tree.add('taxes', 'taxes', before=['order-total'], after=['order-subtotal'])
-        tree.add('order-discount', 'order-discount', before=['order-total', 'taxes'], after=['order-subtotal'])
         tree.add('substitution', 'substitution', after=['order-total'])
-        tree.add('clear-storecredit', 'clear-storecredit', before=['order-total'])
+        
         self.assert_tree_sortment(tree)
 
 class TestCircuitBreaker(unittest.TestCase):
